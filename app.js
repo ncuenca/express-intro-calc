@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const { UnauthorizedError, BadRequestError, ForbiddenError} 
       = require('./expressError');
-const { convertStrSums} = require('./utils');
+const { convertStrNums} = require('./utils');
 const {findMean, findMedian, findMode} = require('./stats');
 
 // useful error class to throw
@@ -18,7 +18,7 @@ app.get('/mean',(req,res,err) =>{
   
   const strNums = req.query.nums.split(',');
   if(strNums.includes(strNums.findIndex(Number.isNaN))) throw new BadRequestError();
-  const convNums = convertStrSums(strNums);  // {Array:Number} converted numbers  
+  const convNums = convertStrNums(strNums);  // {Array:Number} converted numbers  
   return res.json({response: {
                       operation:"mean",
                       value: findMean(convNums),
